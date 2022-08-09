@@ -59,9 +59,9 @@ export class Manager extends Disposable {
 	private _currentTimeout: NodeJS.Timeout | undefined;
 	private _notifiedAboutLooseFiles = false;
 
-	public get workspace(): vscode.WorkspaceFolder | undefined {
-		return this._workspaceManager.workspace;
-	}
+	// public get workspace(): vscode.WorkspaceFolder | undefined {
+	// 	return this._workspaceManager.workspace;
+	// }
 
 	public get workspacePath(): string | undefined {
 		return this._workspaceManager.workspacePath;
@@ -77,7 +77,7 @@ export class Manager extends Disposable {
 		this._outputChannel =
 			vscode.window.createOutputChannel(OUTPUT_CHANNEL_NAME);
 
-		this._workspaceManager = this._register(new WorkspaceManager());
+		this._workspaceManager = this._register(new WorkspaceManager(_extensionUri));
 		this._endpointManager = this._register(
 			new EndpointManager(this._workspaceManager)
 		);
@@ -487,7 +487,7 @@ export class Manager extends Disposable {
 					if (
 						this._server.isRunning &&
 						!this._serverTaskProvider.isRunning &&
-						this.workspace &&
+						this.workspacePath &&
 						this._runTaskWithExternalPreview
 					) {
 						this.closeServer();

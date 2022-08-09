@@ -103,7 +103,7 @@ export function activate(context: vscode.ExtensionContext): void {
 				context.extensionUri
 			).defaultPreviewPath;
 			if (filePath == '') {
-				if (manager.workspace) {
+				if (manager.workspacePath) {
 					vscode.commands.executeCommand(
 						`${SETTINGS_SECTION_ID}.start.preview.atFile`,
 						'/',
@@ -259,7 +259,7 @@ export function activate(context: vscode.ExtensionContext): void {
 					relative = false;
 				}
 
-				if (file == '/' && !manager.workspace) {
+				if (file == '/' && !manager.workspacePath) {
 					// root will not show anything, so cannot revive content. Dispose.
 					webviewPanel.dispose();
 					return;

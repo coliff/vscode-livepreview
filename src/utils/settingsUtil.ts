@@ -14,6 +14,7 @@ export interface LiveServerConfigItem {
 	notifyOnOpenLooseFile: boolean;
 	runTaskWithExternalPreview: boolean;
 	defaultPreviewPath: string;
+	defaultServerRoot: string;
 	debugOnExternalPreview: boolean;
 	hostIP: string;
 }
@@ -55,6 +56,7 @@ export const Settings: any = {
 	notifyOnOpenLooseFile: 'notifyOnOpenLooseFile',
 	runTaskWithExternalPreview: 'tasks.runTaskWithExternalPreview',
 	defaultPreviewPath: 'defaultPreviewPath',
+	defaultServerRoot: 'defaultServerRoot',
 	debugOnExternalPreview: 'debugOnExternalPreview',
 	hostIP: 'hostIP',
 };
@@ -111,6 +113,7 @@ export class SettingUtil {
 				true
 			),
 			defaultPreviewPath: config.get<string>(Settings.defaultPreviewPath, ''),
+			defaultServerRoot: config.get<string>(Settings.defaultServerRoot, ''),
 			debugOnExternalPreview: config.get<boolean>(
 				Settings.debugOnExternalPreview,
 				false

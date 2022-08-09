@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { PathUtil } from '../utils/pathUtil';
+import { SettingUtil } from '../utils/settingsUtil';
 
 /**
  * @description used to query information about the workspace(s).
@@ -10,30 +11,38 @@ import { PathUtil } from '../utils/pathUtil';
  * This is because multi-root relies solely on endpoints to access files.
  */
 export class WorkspaceManager extends Disposable {
-	private _workspace: vscode.WorkspaceFolder | undefined;
+	private _rootPath: string | undefined;
 
-	constructor() {
+	constructor(private readonly _extensionUri: vscode.Uri) {
 		super();
 		if (this.numPaths == 1) {
-			this._workspace = this.firstListedWorkspace;
+			this._rootPath = this.firstListedWorkspace?.uri.fsPath;
 		}
+
+		// const serverRootFromSettings = SettingUtil.GetConfig(
+		// 	_extensionUri
+		// ).defaultServerRoot;
+
+		// if (serverRootFromSettings) {
+		// 	this._workspace = serverRootFromSettings;
+		// }
 	}
 
-	public get workspace(): vscode.WorkspaceFolder | undefined {
-		return this._workspace;
-	}
+	// public get workspace(): vscode.WorkspaceFolder | undefined {
+	// 	return this._workspace;
+	// }
 
 	public get workspacePath(): string | undefined {
-		return this.workspace?.uri.fsPath;
+		return this._rootPath;
 	}
 
-	public get workspaceURI(): vscode.Uri | undefined {
-		return this._workspace?.uri;
-	}
+	// public get workspaceURI(): vscode.Uri | undefined {
+	// 	return this._workspace?.uri;
+	// }
 
-	public get workspacePathname(): string {
-		return this.workspace?.name ?? '';
-	}
+	// public get workspacePathname(): string {
+	// 	return this.workspace?.name ?? '';
+	// }
 
 	public get numPaths(): number {
 		return vscode.workspace.workspaceFolders?.length ?? 0;
